@@ -1,3 +1,11 @@
 .DS_Store
 .venv
 __pycache__
+.ipynb_checkpoints
+
+# data/runs
+mlflow.db
+mlruns
+save_data
+images
+models
