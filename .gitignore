@@ -4,8 +4,12 @@ __pycache__
 .ipynb_checkpoints
 
 # data/runs
-mlflow.db
-mlruns
-save_data
-images
-models
+*.db
+mlruns/
+save_data/
+save_data_lab2/
+images/
+models/
+data/
+*.npy
+*.csv
