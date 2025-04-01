@@ -13,3 +13,4 @@ models/
 data/
 *.npy
 *.csv
+*.xlsx
