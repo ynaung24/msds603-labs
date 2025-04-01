@@ -10,7 +10,7 @@ save_data/
 save_data_lab2/
 images/
 models/
-data/
+wine/
 *.npy
 *.csv
 *.xlsx
