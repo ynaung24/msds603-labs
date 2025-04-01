@@ -12,7 +12,7 @@ mlops/lab/
 ├── lab3/                    # Lab 3 exercises
 ├── ...                      # Other Lab exercises
 ├── requirements.txt         # Project dependencies
-└── README.md               # This file
+└── README.md               # Explanation of this Repository
 ```
 
 ## Prerequisites
