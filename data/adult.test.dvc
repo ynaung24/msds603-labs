@@ -1,0 +1,5 @@
+outs:
+- md5: 366c746021dc50ad9d933d2817612fc9
+  size: 2003132
+  hash: md5
+  path: adult.test
