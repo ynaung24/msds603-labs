@@ -1,0 +1,6 @@
+outs:
+- md5: 3e584720e6718d28509f86f05b7885a1
+  size: 10782
+  isexec: true
+  hash: md5
+  path: wine.data
