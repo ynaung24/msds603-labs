@@ -1,11 +1,23 @@
 stages:
-  prepare:
-    cmd: python src/create_features.py
+  # prepare:
+  #   cmd: python src/create_features.py
+  #   deps:
+  #     - data/adult.data
+  #     - data/adult.test
+  #     - src/create_features.py
+  #   outs:
+  #     - data/pipeline.pkl
+  #     - data/processed_train_data.csv
+  #     - data/processed_test_data.csv
+
+  preprocess:
+    cmd: python src/preprocessing.py
     deps:
-      - data/adult.data
-      - data/adult.test
-      - src/create_features.py
+      - data/wine/wine.data
     outs:
-      - data/pipeline.pkl
-      - data/processed_train_data.csv
-      - data/processed_test_data.csv
+      - save_data/x_train.parquet
+      - save_data/x_val.parquet
+      - save_data/x_test.parquet
+      - save_data/y_train.parquet
+      - save_data/y_val.parquet
+      - save_data/y_test.parquet

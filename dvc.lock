@@ -28,3 +28,36 @@ stages:
       hash: md5
       md5: adf63b6ce20f7ee74f63d5dabb325226
       size: 10829967
+  preprocess:
+    cmd: python src/preprocessing.py
+    deps:
+    - path: data/wine/wine.data
+      hash: md5
+      md5: 3e584720e6718d28509f86f05b7885a1
+      size: 10782
+      isexec: true
+    outs:
+    - path: save_data/x_test.parquet
+      hash: md5
+      md5: 08a6b2628df16f15ab4c893cc2d9f20e
+      size: 14078
+    - path: save_data/x_train.parquet
+      hash: md5
+      md5: 07d2bed94db68ef808bc43ed4862a815
+      size: 20139
+    - path: save_data/x_val.parquet
+      hash: md5
+      md5: 0c6daf36a2c386736165f716f09ccf12
+      size: 13609
+    - path: save_data/y_test.parquet
+      hash: md5
+      md5: 8685b4b6469339c50aa4582d38aa654d
+      size: 2465
+    - path: save_data/y_train.parquet
+      hash: md5
+      md5: 413527d5f93ba12003e5617bf7c7e803
+      size: 2878
+    - path: save_data/y_val.parquet
+      hash: md5
+      md5: 5899b2ddac005e3d6050b0122820b868
+      size: 2423
