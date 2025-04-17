@@ -2,6 +2,7 @@
 .venv
 __pycache__
 .ipynb_checkpoints
+.metaflow/
 
 # data/runs
 *.db
