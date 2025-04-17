@@ -17,3 +17,8 @@ wine/
 *.data
 *.names
 submission/
+*.tex
+*.pdf
+
+# keys
+*.json
