@@ -5,3 +5,5 @@ scikit-learn==1.5.1
 setuptools
 hyperopt
 metaflow
+pylint
+kubernetes

@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import os
 import yaml
+import joblib
 
 def load_params():
     """Load parameters from params.yaml"""
@@ -62,40 +63,52 @@ def split_data(X, y, test_size=0.2, val_size=0.2, random_state=42):
     
     return X_train, X_val, X_test, y_train, y_val, y_test
 
-def scale_data(X_train, X_val, X_test):
+def scale_data(X, X_val=None, X_test=None, scaler_path=None):
     """
     Scale the features using StandardScaler.
     
     Args:
-        X_train (pd.DataFrame): Training features
-        X_val (pd.DataFrame): Validation features
-        X_test (pd.DataFrame): Test features
+        X (pd.DataFrame): Features to scale (training data or single dataset)
+        X_val (pd.DataFrame, optional): Validation features
+        X_test (pd.DataFrame, optional): Test features
+        scaler_path (str, optional): Path to load a pre-fitted scaler
         
     Returns:
-        tuple: (X_train_scaled, X_val_scaled, X_test_scaled)
+        tuple or pd.DataFrame: If X_val and X_test are provided, returns (X_scaled, X_val_scaled, X_test_scaled)
+                              Otherwise, returns just X_scaled
     """
-    scaler = StandardScaler()
+    # Load pre-fitted scaler if provided
+    if scaler_path and os.path.exists(scaler_path):
+        scaler = joblib.load(scaler_path)
+    else:
+        scaler = StandardScaler()
+        # Fit scaler on the input data
+        scaler.fit(X)
     
-    # Fit scaler on training data and transform all sets
-    X_train_scaled = pd.DataFrame(
-        scaler.fit_transform(X_train),
-        columns=X_train.columns,
-        index=X_train.index
+    # Transform the input data
+    X_scaled = pd.DataFrame(
+        scaler.transform(X),
+        columns=X.columns,
+        index=X.index
     )
     
-    X_val_scaled = pd.DataFrame(
-        scaler.transform(X_val),
-        columns=X_val.columns,
-        index=X_val.index
-    )
+    # If validation and test data are provided, transform them too
+    if X_val is not None and X_test is not None:
+        X_val_scaled = pd.DataFrame(
+            scaler.transform(X_val),
+            columns=X_val.columns,
+            index=X_val.index
+        )
+        
+        X_test_scaled = pd.DataFrame(
+            scaler.transform(X_test),
+            columns=X_test.columns,
+            index=X_test.index
+        )
+        
+        return X_scaled, X_val_scaled, X_test_scaled
     
-    X_test_scaled = pd.DataFrame(
-        scaler.transform(X_test),
-        columns=X_test.columns,
-        index=X_test.index
-    )
-    
-    return X_train_scaled, X_val_scaled, X_test_scaled
+    return X_scaled
 
 def save_data(X_train_scaled, X_val_scaled, X_test_scaled, 
               y_train, y_val, y_test, save_dir='save_data'):
@@ -123,6 +136,11 @@ def save_data(X_train_scaled, X_val_scaled, X_test_scaled,
     pd.DataFrame(y_train, columns=['class']).to_parquet(f'{save_dir}/y_train.parquet')
     pd.DataFrame(y_val, columns=['class']).to_parquet(f'{save_dir}/y_val.parquet')
     pd.DataFrame(y_test, columns=['class']).to_parquet(f'{save_dir}/y_test.parquet')
+    
+    # Save the scaler
+    scaler = StandardScaler()
+    scaler.fit(X_train_scaled)
+    joblib.dump(scaler, f'{save_dir}/scaler.joblib')
 
 def main():
     """Main function to run the preprocessing pipeline"""
