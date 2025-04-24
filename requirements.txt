@@ -7,3 +7,7 @@ hyperopt
 metaflow
 pylint
 kubernetes
+joblib
+fastapi
+uvicorn
+streamlit
