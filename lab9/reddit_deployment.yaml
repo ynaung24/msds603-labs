@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reddit-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reddit
+  template:
+    metadata:
+      labels:
+        app: reddit
+    spec:
+      containers:
+      - name: reddit
+        image: us-west2-docker.pkg.dev/skilled-orbit-458219-q7/lab9-repo/redditapp:v1
+        ports:
+        - containerPort: 8000
+        command: ["uvicorn", "redditApp:app", "--host", "0.0.0.0", "--port", "8000"]
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m" 
